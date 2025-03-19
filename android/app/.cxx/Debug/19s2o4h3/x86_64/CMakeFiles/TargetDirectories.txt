@@ -1,0 +1,2 @@
+X:/ITM/Movil/U2/toxica_2025_1-main/android/app/.cxx/Debug/19s2o4h3/x86_64/CMakeFiles/edit_cache.dir
+X:/ITM/Movil/U2/toxica_2025_1-main/android/app/.cxx/Debug/19s2o4h3/x86_64/CMakeFiles/rebuild_cache.dir

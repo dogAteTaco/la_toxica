@@ -1,15 +1,17 @@
-import 'package:toxica_2/domain/entities/message.dart';
 import 'package:dio/dio.dart';
+import 'package:toxica_2/domain/entities/message.dart';
+import 'package:toxica_2/infrastructure/yes_no_answer.dart';
 
 class GetYesNoAnswer {
-  Future<Message> GetAnswer() async {
-    final _dio = Dio(BaseOptions(baseUrl:'https://yesno.wtf'));
-    final response = await _dio.get('api');
-    print(response.data);
+  final _dio = Dio(BaseOptions(baseUrl: 'https://yesno.wtf'));
+
+  Future<Message> getAnswer() async {
+    final response = await _dio.get('/api');
+    final YesNoAnswer model = YesNoAnswer.fromJson(response.data);
     return Message(
-      text: 'hola', 
+      text: model.answer == 'no' ? 'No!' : 'Si <3',
+      imageUrl: model.image,
       fromWho: FromWho.hers,
-      imageUrl: 'https://yesno.wtf/assets/no/8-5e08abbe5aacd2cf531948145b787e9a.gif'
-      );
+    );
   }
 }

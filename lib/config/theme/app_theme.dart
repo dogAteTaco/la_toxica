@@ -13,9 +13,13 @@ const List<Color> colors = [
 class AppTheme {
   final int selectedColors;
 
-  const AppTheme({required this.selectedColors})
+  const AppTheme({required this.selectedColors, required Brightness brightness})
       : assert(selectedColors >= 0 && selectedColors < colors.length,
             'no te pases de lanza compa solo es el rango de 0 a ${colors.length - 1}');
+
+  get brightness => null;
+
+  set selectedColor(int selectedColor) {}
 
   ThemeData theme() => ThemeData(
       colorSchemeSeed: colors[selectedColors], brightness: Brightness.light);

@@ -12,7 +12,7 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatProvider chatProvider = context.watch<ChatProvider>();
-    final colors = Theme.of(context).colorScheme;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -20,18 +20,28 @@ class ChatView extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
+                  controller: chatProvider.scrollController,
                   itemCount: chatProvider.messages.length,
                   itemBuilder: (context, index) {
-                    return chatProvider.messages[index].fromWho==FromWho.me
-                        ? MyMessageBubbleView(
-                            colors: colors, msg: chatProvider.messages[index].text)
-                        : HerMessageBubbleView(colors: colors, msg: chatProvider.messages[index].text);
+                    return _generateBubble(chatProvider.messages[index],
+                        Theme.of(context).colorScheme);
                   }),
             ),
-            MessageFieldBox(onValue: (String value) => chatProvider.sendMessage(value)),
+            Padding(
+              child: MessageFieldBox(
+                onValue: (String value) => chatProvider.sendMessage(value)),
+              padding: EdgeInsets.only(bottom:8),// Mueve el text box un poco arriba para evitar ser cortado por la pantalla
+            )
+            
           ],
         ),
       ),
     );
+  }
+
+  Widget _generateBubble(Message message, ColorScheme colorScheme) {
+    return message.fromWho == FromWho.me
+        ? MyMessageBubbleView(colors: colorScheme, msg: message)
+        : HerMessageBubbleView(colors: colorScheme, msg: message);
   }
 }
